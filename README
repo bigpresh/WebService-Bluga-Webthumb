@@ -1,55 +1,97 @@
-WebService-Bluga-Webthumb
+NAME
+    WebService::Bluga::Webthumb - fetch website thumbnails via
+    webthumb.bluga.net
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SYNOPSIS
+        use WebService::Bluga::Webthumb;
+        my $wt = WebService::Bluga::Webthumb->new(
+            user    => $user_id,
+            api_key => $api_key,
+            size    => $size,  # small, medium1, medium2, large (default: medium)
+            cache   => $cache_days, # optional - default 14
+        );
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+        # get a thumbnail URL using the default settings
+        my $thumb_url = wt->thumb_url($url);
 
+        # Get a thumbnail URL overriding some settings:
+        my $thumb_url = $wt->thumb_url($url, { size => 'large' });
 
-INSTALLATION
+Class methods
+    new Create a new WebService::Bluga::Webthumb object. Takes the following
+        params:
 
-To install this module, run the following commands:
+        user
+            Your webthumb user ID, available from your
+            http://webthumb.bluga.net/user page.
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+        api_key
+            Your webthumb API key. also available from your user page. (This
+            is used to construct the hash of the thumbnail URL, but not sent
+            directly.)
 
-SUPPORT AND DOCUMENTATION
+        size
+            The size of the thumbnail to generate. Size can be:
 
-After installing, you can find documentation for this module with the
-perldoc command.
+            * small - 80x60
+            * medium - 160x120
+            * medium2 - 320x240
+            * large - 640x480
 
-    perldoc WebService::Bluga::Webthumb
+        cache
+            How many days a generated thumbnail can be cached on the
+            webthumb servers before a fresh one is generated. Generating a
+            thumbnail uses a credit whereas serving up a cached one uses a
+            fraction of a credit, so don't set this too low.
 
-You can also look for information at:
+            If not specified, defaults to 14 days.
 
-    RT, CPAN's request tracker
+Instance methods
+    easy_thumb
+        Given an URL, and optionally `size' / `cache' params to override
+        those from the object, returns an URL to the thumbnail, to use in an
+        IMG tag.
+
+AUTHOR
+    David Precious, `<davidp at preshweb.co.uk>'
+
+BUGS
+    Please report any bugs or feature requests to
+    `bug-webservice-bluga-webthumb at rt.cpan.org', or through the web
+    interface at
+    http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WebService-Bluga-Webthumb
+    . I will be notified, and then you'll automatically be notified of
+    progress on your bug as I make changes.
+
+SEE ALSO
+    See the API documentation at http://webthumb.bluga.net/api-easythumb
+
+SUPPORT
+    You can find documentation for this module with the perldoc command.
+
+        perldoc WebService::Bluga::Webthumb
+
+    You can also look for information at:
+
+    * RT: CPAN's request tracker
         http://rt.cpan.org/NoAuth/Bugs.html?Dist=WebService-Bluga-Webthumb
 
-    AnnoCPAN, Annotated CPAN documentation
+    * AnnoCPAN: Annotated CPAN documentation
         http://annocpan.org/dist/WebService-Bluga-Webthumb
 
-    CPAN Ratings
+    * CPAN Ratings
         http://cpanratings.perl.org/d/WebService-Bluga-Webthumb
 
-    Search CPAN
+    * Search CPAN
         http://search.cpan.org/dist/WebService-Bluga-Webthumb/
 
-
+ACKNOWLEDGEMENTS
 LICENSE AND COPYRIGHT
+    Copyright 2011 David Precious.
 
-Copyright (C) 2011 David Precious
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of either: the GNU General Public License as published
+    by the Free Software Foundation; or the Artistic License.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
+    See http://dev.perl.org/licenses/ for more information.
 
