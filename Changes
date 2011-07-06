@@ -1,7 +1,11 @@
 Revision history for WebService-Bluga-Webthumb
 
+0.02    2011-07-06
+        Some documentation improvements, and use thumb_url instead of easy_thumb
+        for a method name (but continue to support easy_thumb as an alias).
+
 0.01    2011-07-05
-    First beta version.  Working, but need to write some tests.
+        First beta version.  Working, but need to write some tests.
 
 
 
