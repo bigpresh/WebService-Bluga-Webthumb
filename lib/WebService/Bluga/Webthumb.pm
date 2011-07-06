@@ -114,14 +114,14 @@ sub new {
 
 =over 4
 
-=item easy_thumb
+=item thumb_url
 
 Given an URL, and optionally C<size> / C<cache> params to override those from
 the object, returns an URL to the thumbnail, to use in an IMG tag.
 
 =cut
 
-sub easy_thumb {
+sub thumb_url {
     my ($self, $url, $params) = @_;
 
     # Get our params, use defaults from the object
@@ -145,7 +145,21 @@ sub easy_thumb {
     return $uri->as_string;
 }
 
+=item easy_thumb
+
+An alias for C<thumb_url>.  This name was used in 0.01 to reflect the fact that
+it used the L<EasyThumb API|http://webthumb.bluga.net/api-easythumb> rather than
+the full API; however, I think C<thumb_url> is rather clearer as to the actual
+purpose of the method, and the implementation of it is somewhat unimportant, so
+consider this method somewhat deprecated (but likely to be supported
+indefinitely.)
+
+=cut
+
+sub easy_thumb { shift->thumb_url(@_); }
+
 =back
+
 
 
 
@@ -154,15 +168,32 @@ sub easy_thumb {
 
 David Precious, C<< <davidp at preshweb.co.uk> >>
 
+=head1 CONTRIBUTING
+
+This module is developed on GitHub at:
+
+L<https://github.com/bigpresh/WebService-Bluga-Webthumb>
+
+Bug reports / suggestions / pull requests are all very welcome.
+
+If you find this module useful, please feel free to 
+L<rate it on cpanratings|http://cpanratings.perl.org/d/WebService-Bluga-Webthumb>
+
+
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-webservice-bluga-webthumb at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WebService-Bluga-Webthumb>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Bug reports via L<Issues on
+GitHub|https://github.com/bigpresh/WebService-Bluga-Webthumb/issues> are
+preferred, as the module is developed on GitHub, and issues can be correlated to
+commits.  Bug reports via L<the RT
+queue|http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WebService-Bluga-Webthumb>
+are still valued though, if you'd prefer that way.
 
 =head1 SEE ALSO
 
 See the API documentation at L<http://webthumb.bluga.net/api-easythumb>
+
+For a basic description of the service, see L<http://webthumb.bluga.net/>
 
 
 =head1 SUPPORT
@@ -171,31 +202,6 @@ You can find documentation for this module with the perldoc command.
 
     perldoc WebService::Bluga::Webthumb
 
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WebService-Bluga-Webthumb>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/WebService-Bluga-Webthumb>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/WebService-Bluga-Webthumb>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/WebService-Bluga-Webthumb/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
 
 
 =head1 LICENSE AND COPYRIGHT
