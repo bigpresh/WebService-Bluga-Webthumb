@@ -47,45 +47,48 @@ Class methods
             If not specified, defaults to 14 days.
 
 Instance methods
-    easy_thumb
+    thumb_url
         Given an URL, and optionally `size' / `cache' params to override
         those from the object, returns an URL to the thumbnail, to use in an
         IMG tag.
 
+    easy_thumb
+        An alias for `thumb_url'. This name was used in 0.01 to reflect the
+        fact that it used the EasyThumb API rather than the full API;
+        however, I think `thumb_url' is rather clearer as to the actual
+        purpose of the method, and the implementation of it is somewhat
+        unimportant, so consider this method somewhat deprecated (but likely
+        to be supported indefinitely.)
+
 AUTHOR
     David Precious, `<davidp at preshweb.co.uk>'
 
+CONTRIBUTING
+    This module is developed on GitHub at:
+
+    https://github.com/bigpresh/WebService-Bluga-Webthumb
+
+    Bug reports / suggestions / pull requests are all very welcome.
+
+    If you find this module useful, please feel free to rate it on
+    cpanratings
+
 BUGS
-    Please report any bugs or feature requests to
-    `bug-webservice-bluga-webthumb at rt.cpan.org', or through the web
-    interface at
-    http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WebService-Bluga-Webthumb
-    . I will be notified, and then you'll automatically be notified of
-    progress on your bug as I make changes.
+    Bug reports via Issues on GitHub are preferred, as the module is
+    developed on GitHub, and issues can be correlated to commits. Bug
+    reports via the RT queue are still valued though, if you'd prefer that
+    way.
 
 SEE ALSO
     See the API documentation at http://webthumb.bluga.net/api-easythumb
+
+    For a basic description of the service, see http://webthumb.bluga.net/
 
 SUPPORT
     You can find documentation for this module with the perldoc command.
 
         perldoc WebService::Bluga::Webthumb
 
-    You can also look for information at:
-
-    * RT: CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=WebService-Bluga-Webthumb
-
-    * AnnoCPAN: Annotated CPAN documentation
-        http://annocpan.org/dist/WebService-Bluga-Webthumb
-
-    * CPAN Ratings
-        http://cpanratings.perl.org/d/WebService-Bluga-Webthumb
-
-    * Search CPAN
-        http://search.cpan.org/dist/WebService-Bluga-Webthumb/
-
-ACKNOWLEDGEMENTS
 LICENSE AND COPYRIGHT
     Copyright 2011 David Precious.
 
