@@ -7,7 +7,7 @@ SYNOPSIS
         my $wt = WebService::Bluga::Webthumb->new(
             user    => $user_id,
             api_key => $api_key,
-            size    => $size,  # small, medium1, medium2, large (default: medium)
+            size    => $size,  # small, medium, medium2, large (default: medium)
             cache   => $cache_days, # optional - default 14
         );
 
@@ -62,6 +62,9 @@ Instance methods
 
 AUTHOR
     David Precious, `<davidp at preshweb.co.uk>'
+
+ACKNOWLEDGEMENTS
+    James Ronan
 
 CONTRIBUTING
     This module is developed on GitHub at:
