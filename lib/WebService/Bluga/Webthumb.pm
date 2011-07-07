@@ -103,6 +103,8 @@ sub new {
         $params{size} = 'medium';
     }
 
+    $params{cache} ||= 14;
+
     my $self = \%params;
     bless $self => $class;
     return $self;
