@@ -202,7 +202,7 @@ sub _get_cached_url {
     my $dir = Path::Class::dir($params->{cache_dir})
         or return;
     my $file = $dir->file(
-        Digest::MD5::md5_hex($url)
+        Digest::MD5::md5_hex($url . $params->{size})
     ) or return;
     my $stat = $file->stat or return;
     if ($stat->mtime < time - ($params->{cache} * 24 * 60 * 60)) {
@@ -220,7 +220,7 @@ sub _cache_image {
     my $dir = Path::Class::dir($params->{cache_dir})
         or return;
     my $file = $dir->file(
-        Digest::MD5::md5_hex($url)
+        Digest::MD5::md5_hex($url . $params->{size})
     ) or return;
     $file->spew($img_content);
     return $params->{cache_url_stub} . $file->basename;
