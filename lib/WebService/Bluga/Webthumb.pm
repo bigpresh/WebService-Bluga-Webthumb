@@ -4,7 +4,9 @@ use warnings;
 use strict;
 use Carp;
 use Digest::MD5;
+use LWP::Simple;
 use URI;
+use Path::Class;
 use POSIX qw(strftime);
 
 =head1 NAME
@@ -23,6 +25,10 @@ our $VERSION = '0.03';
         api_key => $api_key,
         size    => $size,  # small, medium, medium2, large (default: medium)
         cache   => $cache_days, # optional - default 14
+        
+        # optional settings for local caching:
+        cache_dir => '....',
+        cache_url_stub => '/images/thumbs/',
     );
 
     # get a thumbnail URL using the default settings
@@ -78,6 +84,16 @@ up a cached one uses a fraction of a credit, so don't set this too low.
 
 If not specified, defaults to 14 days.
 
+=item cache_dir
+
+If set, generated thumbnails will be saved into this directory, and the URL
+returned will be constructed using C<cache_url_stub> (so the C<cache_url_stub>
+setting should be set to the URL at which the contents of C<cache_dir> are
+available).
+
+The age of the cached thumbnail will be compared against the C<cache> setting, 
+and if it's too old, the cached thumbnail will be replaced with a fresh one.
+
 =back
 
 =cut
@@ -131,7 +147,13 @@ sub thumb_url {
     # Get our params, use defaults from the object
     $params ||= {};
     $params->{$_} ||= $self->{$_}
-        for qw(size cache);
+        for qw(size cache cache_dir cache_url_stub);
+
+    # First, if we're caching locally, we need to see if we already have a
+    # cached version; if so, it's easy
+    if (my $url = $self->_get_cached_url($url, $params)) {
+        return $url;
+    }
 
     # Generate the appropriate URL:
     my $uri = URI->new('http://webthumb.bluga.net/easythumb.php');
@@ -146,6 +168,17 @@ sub thumb_url {
             $self->{api_key}
         ),
     );
+
+    # If we're caching, we want to fetch the resulting thumbnail and store it
+    # locally, then return the URL to that instead
+    if ($params->{cache_dir}) {
+        my $img_content = LWP::Simple::get($uri);
+        if ($img_content) {
+            my $url = $self->_cache_image($url, $params, $img_content);
+            return $url if defined $url;
+        }
+    }
+
     return $uri->as_string;
 }
 
@@ -162,11 +195,39 @@ indefinitely.)
 
 sub easy_thumb { shift->thumb_url(@_); }
 
+
+sub _get_cached_url {
+    my ($self, $url, $params) = @_;
+
+    my $dir = Path::Class::dir($params->{cache_dir})
+        or return;
+    my $file = $dir->file(
+        Digest::MD5::md5_hex($url)
+    ) or return;
+    my $stat = $file->stat or return;
+    if ($stat->mtime < time - ($params->{cache} * 24 * 60 * 60)) {
+        warn "$file is too old, deleting it";
+        $file->remove;
+        return;
+    } else {
+        return $params->{cache_url_stub} . $file->basename;
+    }
+}
+
+sub _cache_image {
+    my ($self, $url, $params, $img_content) = @_;
+
+    my $dir = Path::Class::dir($params->{cache_dir})
+        or return;
+    my $file = $dir->file(
+        Digest::MD5::md5_hex($url)
+    ) or return;
+    $file->spew($img_content);
+    return $params->{cache_url_stub} . $file->basename;
+}
+
+
 =back
-
-
-
-
 
 =head1 AUTHOR
 
