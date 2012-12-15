@@ -1,5 +1,11 @@
 Revision history for WebService-Bluga-Webthumb
 
+0.04    2012-12-15
+        [ ENHANCEMENTS ]
+        Add support for local caching, so images can be fetched and stored to a
+        local directory, and URLs for the image in that directory served up
+        afterwards.
+
 0.03    2011-07-07
         Actually default to caching for 14 days if nothing else was specified,
         as already documented.
