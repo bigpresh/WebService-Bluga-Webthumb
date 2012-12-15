@@ -206,7 +206,6 @@ sub _get_cached_url {
     ) or return;
     my $stat = $file->stat or return;
     if ($stat->mtime < time - ($params->{cache} * 24 * 60 * 60)) {
-        warn "$file is too old, deleting it";
         $file->remove;
         return;
     } else {
