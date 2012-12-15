@@ -20,4 +20,11 @@ WriteMakefile(
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'WebService-Bluga-Webthumb-*' },
+    META_MERGE => {
+        resources => {
+            repository => 'https://github.com/bigpresh/WebService-Bluga-Webthumb',
+            bugtracker => 'https://github.com/bigpresh/WebService-Bluga-Webthumb/issues',
+            homepage   => 'https://github.com/bigpresh/WebService-Bluga-Webthumb/',
+        },
+    },
 );
