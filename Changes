@@ -1,5 +1,9 @@
 Revision history for WebService-Bluga-Webthumb
 
+0.05    2013-01-11
+        [ ENHANCEMENTS ]
+        Add example script.  No functional changes to module.
+
 0.04    2012-12-15
         [ ENHANCEMENTS ]
         Add support for local caching, so images can be fetched and stored to a

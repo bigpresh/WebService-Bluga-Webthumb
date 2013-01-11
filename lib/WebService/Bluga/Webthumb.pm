@@ -15,7 +15,7 @@ WebService::Bluga::Webthumb - fetch website thumbnails via webthumb.bluga.net
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 SYNOPSIS
 
